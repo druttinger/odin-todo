@@ -41,12 +41,25 @@ export default class ToDoDisplay {
         this.render();
     });
 
-    let switchButton = document.getElementById("switch-project");
-    switchButton.addEventListener("click", () => {
-        const project = document.getElementById("project").value;
-        display.toDoList = new ToDoList();
+    let loadButton = document.getElementById("load-project");
+    loadButton.addEventListener("click", () => {
+        let project = prompt("Enter project name");
+        if (this.toDoList.areStoredTasks(project)){
+          this.toDoList.loadTasks(project);
+        } else {
+          if (confirm("Project not found. Create new project?")){
+            this.toDoList.clearTasks();
+          }
+        }
         display.render();
     });
+
+    let saveButton = document.getElementById("save-project");
+    saveButton.addEventListener("click", () => {
+        let project = prompt("Enter project name");
+        this.toDoList.saveTasks(project);
+    });
+
   }
 
   configureModal() {

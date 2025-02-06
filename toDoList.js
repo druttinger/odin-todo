@@ -3,16 +3,16 @@ export default class ToDoList {
     this.tasks = [];
   }
 
-  addTask(task) {
-    this.tasks.push(task);
-  }
-
   addTask(name, description, dueDate, priority) {
     this.tasks.push(new Task(name, description, dueDate, priority));
   }
 
   removeTask(task) {
     this.tasks = this.tasks.filter((t) => t !== task);
+  }
+
+  clearTasks() {
+    this.tasks = [];
   }
 
   getTasks() {
@@ -25,19 +25,14 @@ export default class ToDoList {
 
   loadTasks(key = 'tasks') {
     let taskData = JSON.parse(localStorage.getItem(key));
-    let temp;
-    console.log(taskData);
+    this.clearTasks();
     taskData.forEach((each) => {
-      console.log(each);
-      temp = new Task(each.name, each.description, each.dueDate, each.priority);
-      console.log(temp);
       this.addTask(each.name, each.description, each.dueDate, each.priority);
-      console.log(this.tasks);
     });
   }
 
-  areStoredTasks() {
-    return !!localStorage.getItem('tasks');
+  areStoredTasks(key = 'tasks') {
+    return !!localStorage.getItem(key);
   }
 }
 
