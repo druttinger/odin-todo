@@ -1,20 +1,19 @@
-import ToDoList from "./toDoList.js";
+import ToDoList from "./toDoList.js"; //test
 
 export default class ToDoDisplay {
   constructor() {
     this.toDoList = new ToDoList();
-    this.toDoList.addTask("Test", "test", "1/1/2099");
+    if (this.toDoList.areStoredTasks()){
+      this.toDoList.loadTasks();
+    }
     this.configureButton();
     this.configureModal();
-
-   
-
     this.render();
   }
 
-  addTask(name, description, dueDate) {
-    // const task = new Task(name, description, dueDate);
-    this.toDoList.addTask(name, description, dueDate);
+  addTask(name, description, dueDate, priorityInput) {
+    this.toDoList.addTask(name, description, dueDate, priorityInput);
+    this.toDoList.saveTasks();
   }
 
   removeTask(task) {
@@ -70,7 +69,10 @@ export default class ToDoDisplay {
     
     this.submitButton.onclick = (event) => {
         event.preventDefault();
-        this.toDoList.addTask(this.titleInput.value, this.descriptionInput.value, this.dueDateInput.value);
+        this.addTask(this.titleInput.value, 
+                     this.descriptionInput.value, 
+                     this.dueDateInput.value,
+                     this.priorityInput.value);
         this.titleInput.value = '';
         this.descriptionInput.value = '';
         this.dueDateInput.value = '';
@@ -87,9 +89,24 @@ export default class ToDoDisplay {
     list.innerHTML = "";
     const fragment = document.createDocumentFragment();
     tasks.forEach((task) => {
-    const li = document.createElement("li");
-    li.innerHTML = `${task.getName()} - ${task.getDescription()} - ${task.getDueDate()}`;
-    fragment.appendChild(li);
+      const todo = document.createElement("todo");
+      todo.classList.add("todo");
+      switch(task.getPriority()) {
+          case "low":
+          todo.style.backgroundColor = "lightgreen";
+          break;
+          case "medium":
+          todo.style.backgroundColor = "lightyellow";
+          break;
+          case "high":
+          todo.style.backgroundColor = "pink";
+          break;
+      }
+      todo.innerHTML = `<div>${task.getName()}</div>
+                      <div>${task.getDescription()}</div>
+                      <div>${task.getDueDate()}</div>
+                      <div>${task.getPriority()}</div>`;
+      fragment.appendChild(todo);
     });
     list.appendChild(fragment);
   }

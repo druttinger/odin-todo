@@ -1,0 +1,22 @@
+{
+  "name": "odin-todo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "toDoDisplay.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/druttinger/odin-todo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/druttinger/odin-todo/issues"
+  },
+  "homepage": "https://github.com/druttinger/odin-todo#readme",
+  "dependencies": {
+    "date-fns": "^4.1.0"
+  }
+}
