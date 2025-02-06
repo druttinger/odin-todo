@@ -1,10 +1,14 @@
+import Task from "./Task.js";
+
 export default class ToDoList {
   constructor() {
     this.tasks = [];
   }
 
   addTask(name, description, dueDate, priority) {
-    this.tasks.push(new Task(name, description, dueDate, priority));
+    const newTask = new Task(name, description, dueDate, priority);
+    this.tasks.push(newTask);
+    return newTask;
   }
 
   removeTask(task) {
@@ -24,6 +28,7 @@ export default class ToDoList {
   }
 
   loadTasks(key = 'tasks') {
+    console.log("Why are things getting reset?");
     let taskData = JSON.parse(localStorage.getItem(key));
     this.clearTasks();
     taskData.forEach((each) => {
@@ -36,48 +41,3 @@ export default class ToDoList {
   }
 }
 
-class Task {
-  constructor(name, description, dueDate, priority) {
-    this.name = name;
-    this.description = description;
-    this.dueDate = dueDate;
-    this.priority = priority;
-    this.done = false;
-  }
-
-    getName() {
-        return this.name;
-    }
-
-    getDescription() {
-        return this.description;
-    }
-
-    getDueDate() {
-        return this.dueDate;
-    }
-
-    getPriority() {
-        return this.priority;
-    }
-
-    setName(name) {
-        this.name = name;
-    }
-
-    setDescription(description) {
-        this.description = description;
-    }
-
-    setDueDate(dueDate) {
-        this.dueDate = dueDate;
-    }
-
-    setPriority(priority) {
-        this.priority = priority;
-    }
-
-    markAsDone() {
-        this.done = true;
-    }
-}

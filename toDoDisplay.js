@@ -1,4 +1,6 @@
-import ToDoList from "./toDoList.js"; //test
+import ToDoList from "./toDoList.js";
+// import Task from "./Task.js";
+
 
 export default class ToDoDisplay {
   constructor() {
@@ -6,14 +8,19 @@ export default class ToDoDisplay {
     if (this.toDoList.areStoredTasks()){
       this.toDoList.loadTasks();
     }
+    this.currentTask = null;
     this.configureButton();
     this.configureModal();
     this.render();
   }
 
-  addTask(name, description, dueDate, priorityInput) {
-    this.toDoList.addTask(name, description, dueDate, priorityInput);
-    this.toDoList.saveTasks();
+  // let this.currentTask = null;
+
+  updateTask(name, description, dueDate, priorityInput) {
+    if (this.currentTask === null) {
+      this.toDoList.addTask(name, description, dueDate, priorityInput);
+    }
+    this.currentTask.updateTask(name, description, dueDate, priorityInput);
   }
 
   removeTask(task) {
@@ -27,7 +34,8 @@ export default class ToDoDisplay {
   configureButton() {
     let addButton = document.getElementById("add-todo");
     addButton.addEventListener("click", () => {
-        console.log("Add button clicked");
+        console.log("This should work, right?");
+        this.currentTask = this.toDoList.addTask("", "", "", "");
         modal.showModal()
     });
 
@@ -79,10 +87,14 @@ export default class ToDoDisplay {
     this.submitButton = document.getElementById('submit');
     // Cancel button
     this.cancelButton = document.getElementById('cancel');
+    this.cancelButton.onclick = (event) => {
+      event.preventDefault();
+      this.modal.close();
+    }
     
     this.submitButton.onclick = (event) => {
         event.preventDefault();
-        this.addTask(this.titleInput.value, 
+        this.updateTask(this.titleInput.value, 
                      this.descriptionInput.value, 
                      this.dueDateInput.value,
                      this.priorityInput.value);
@@ -119,6 +131,14 @@ export default class ToDoDisplay {
                       <div>${task.getDescription()}</div>
                       <div>${task.getDueDate()}</div>
                       <div>${task.getPriority()}</div>`;
+      todo.addEventListener("click", () => {
+        // this.titleInput.value = task.getName();
+        // this.descriptionInput.value = task.getDescription();
+        // this.dueDateInput.value = task.getDueDate();
+        // this.priorityInput.value = task.getPriority();
+        this.currentTask = task;
+        this.modal.showModal();
+      });
       fragment.appendChild(todo);
     });
     list.appendChild(fragment);
