@@ -19,6 +19,11 @@ export default class ToDoList {
     this.tasks = [];
   }
 
+  clearDoneTasks() {
+    console.log("Is this working?");
+    this.tasks = this.tasks.filter((t) => !t.isComplete());
+  }
+
   getTasks() {
     return this.tasks;
   }
@@ -28,7 +33,6 @@ export default class ToDoList {
   }
 
   loadTasks(key = 'tasks') {
-    console.log("Why are things getting reset?");
     let taskData = JSON.parse(localStorage.getItem(key));
     this.clearTasks();
     taskData.forEach((each) => {

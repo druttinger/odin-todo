@@ -23,6 +23,10 @@ export default class Task {
     return this.priority;
   }
 
+  isComplete(){
+    return this.done
+  }
+
   setName(name) {
     this.name = name;
   }
@@ -37,6 +41,10 @@ export default class Task {
 
   setPriority(priority) {
     this.priority = priority;
+  }
+
+  setComplete(isChecked){
+    this.done = isChecked;
   }
 
   markAsDone() {

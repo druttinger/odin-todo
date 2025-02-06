@@ -47,12 +47,20 @@ button:hover {
     transition: background-color 0.3s ease;
 }
 
+.todo > button{
+    background-color: grey;
+    border: 0px;
+    padding: 0px;
+    width: 25px;
+    height: 25px;
+}
+
 .todo > div {
     width: 200px;
     flex: 1 0 1;
 }
 
-#todos > todo:hover {
+.todo:hover {
     background-color: #ffffff;
 }
 
